@@ -29,6 +29,11 @@ public class QuizActivity extends AppCompatActivity {
   // Index of current question.
   private int mCurrentIndex = 0;
 
+  // Update question TextView with current question text.
+  private void updateQuestion() {
+    int question = mQuestionBank[mCurrentIndex].getTextResId();
+    mQuestionTextView.setText(question);
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +41,6 @@ public class QuizActivity extends AppCompatActivity {
     setContentView(R.layout.activity_quiz);
 
     mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
-    int question = mQuestionBank[mCurrentIndex].getTextResId();
-    mQuestionTextView.setText(question);
 
     mTrueButton = (Button) findViewById(R.id.true_button);
     mTrueButton.setOnClickListener(new View.OnClickListener() {
@@ -70,10 +73,11 @@ public class QuizActivity extends AppCompatActivity {
 
         // Advance to next question on click.
         mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-        int question = mQuestionBank[mCurrentIndex].getTextResId();
-        mQuestionTextView.setText(question);
+        updateQuestion();
       }
     });
+
+    updateQuestion();
   }
 
   @Override
